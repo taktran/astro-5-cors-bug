@@ -1,0 +1,57 @@
+---
+const BASE_URL = "http://astro.local";
+const ASTRO_5_URL = `${BASE_URL}:4005/api.json`;
+const ASTRO_4_URL = `${BASE_URL}:4004/api.json`;
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Astro 5 - Test CORS bug</title>
+  </head>
+  <body>
+    <h1>{Astro.generator} - Test CORS bug</h1>
+
+    <p>
+      Astro 5 API: <a href={ASTRO_5_URL}>{ASTRO_5_URL}</a>
+    </p>
+    <button id="astro5Button">Get Astro 5 JSON</button>
+
+    <p>
+      Astro 4 API: <a href={ASTRO_4_URL}>{ASTRO_4_URL}</a>
+    </p>
+    <button id="astro4Button">Get Astro 4 JSON</button>
+  </body>
+</html>
+
+<script
+  define:vars={{
+    ASTRO_5_URL,
+    ASTRO_4_URL,
+  }}
+>
+  const astro5ButtonEl = document.getElementById("astro5Button");
+  const astro4ButtonEl = document.getElementById("astro4Button");
+  const resultEl = document.getElementById("result");
+
+  astro5ButtonEl.addEventListener("click", async () => {
+    const response = await fetch(ASTRO_5_URL);
+    const result = await response.json();
+
+    console.log({
+      result,
+    });
+  });
+
+  astro4ButtonEl.addEventListener("click", async () => {
+    const response = await fetch(ASTRO_4_URL);
+    const result = await response.json();
+
+    console.log({
+      result,
+    });
+  });
+</script>
