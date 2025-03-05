@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "astro dev --port 4005 --host astro.local",
     "build": "astro build",
-    "preview": "astro preview",
+    "preview": "astro preview --port 4055 --host astro.local",
+    "buildPreview": "npm run build && npm run preview",
     "astro": "astro"
   },
   "dependencies": {

@@ -6,6 +6,8 @@
     "all:install": "cd astro-5-api && npm install && cd ../astro-4-api && npm install && cd ../astro-site && npm install",
     "astro5:dev": "cd astro-5-api && npm run dev",
     "astro4:dev": "cd astro-4-api && npm run dev",
+    "astro5:buildPreview": "cd astro-5-api && npm run buildPreview",
+    "astro4:buildPreview": "cd astro-4-api && npm run buildPreview",
     "site:dev": "cd astro-site && npm run dev"
   }
 }

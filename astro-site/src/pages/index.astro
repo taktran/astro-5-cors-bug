@@ -1,7 +1,9 @@
 ---
 const BASE_URL = "http://astro.local";
-const ASTRO_5_URL = `${BASE_URL}:4005/api.json`;
-const ASTRO_4_URL = `${BASE_URL}:4004/api.json`;
+const ASTRO_5_DEV_URL = `${BASE_URL}:4005/api.json`;
+const ASTRO_4_DEV_URL = `${BASE_URL}:4004/api.json`;
+const ASTRO_5_BUILD_PREVIEW_URL = `${BASE_URL}:4055/api.json`;
+const ASTRO_4_BUILD_PREVIEW_URL = `${BASE_URL}:4044/api.json`;
 ---
 
 <html lang="en">
@@ -15,43 +17,65 @@ const ASTRO_4_URL = `${BASE_URL}:4004/api.json`;
   <body>
     <h1>{Astro.generator} - Test CORS bug</h1>
 
+		<h2>Dev server</h2>
     <p>
-      Astro 5 API: <a href={ASTRO_5_URL}>{ASTRO_5_URL}</a>
+      Astro 5 API: <a href={ASTRO_5_DEV_URL}>{ASTRO_5_DEV_URL}</a>
     </p>
-    <button id="astro5Button">Get Astro 5 JSON</button>
+    <button id="astro5DevButton">Get Astro 5 JSON</button>
 
     <p>
-      Astro 4 API: <a href={ASTRO_4_URL}>{ASTRO_4_URL}</a>
+      Astro 4 API: <a href={ASTRO_4_DEV_URL}>{ASTRO_4_DEV_URL}</a>
     </p>
-    <button id="astro4Button">Get Astro 4 JSON</button>
+    <button id="astro4DevButton">Get Astro 4 JSON</button>
+
+		<h2>Build Preview server</h2>
+    <p>
+      Astro 5 Build Preview API: <a href={ASTRO_5_BUILD_PREVIEW_URL}>{ASTRO_5_BUILD_PREVIEW_URL}</a>
+    </p>
+    <button id="astro5BuildPreviewButton">Get Astro 5 JSON</button>
+
+    <p>
+      Astro 4 Build Preview API: <a href={ASTRO_4_BUILD_PREVIEW_URL}>{ASTRO_4_BUILD_PREVIEW_URL}</a>
+    </p>
+    <button id="astro4BuildPreviewButton">Get Astro 4 JSON</button>
   </body>
 </html>
 
 <script
   define:vars={{
-    ASTRO_5_URL,
-    ASTRO_4_URL,
+    ASTRO_5_DEV_URL,
+    ASTRO_4_DEV_URL,
+		ASTRO_5_BUILD_PREVIEW_URL,
+		ASTRO_4_BUILD_PREVIEW_URL
   }}
 >
-  const astro5ButtonEl = document.getElementById("astro5Button");
-  const astro4ButtonEl = document.getElementById("astro4Button");
-  const resultEl = document.getElementById("result");
+	const urlButtons = [
+		{
+			url: ASTRO_5_DEV_URL,
+			buttonId: "astro5DevButton"
+		},
+		{
+			url: ASTRO_4_DEV_URL,
+			buttonId: "astro4DevButton"
+		},
+		{
+			url: ASTRO_5_BUILD_PREVIEW_URL,
+			buttonId: "astro5BuildPreviewButton"
+		},
+		{
+			url: ASTRO_4_BUILD_PREVIEW_URL,
+			buttonId: "astro4BuildPreviewButton"
+		}
+	];
 
-  astro5ButtonEl.addEventListener("click", async () => {
-    const response = await fetch(ASTRO_5_URL);
-    const result = await response.json();
+	urlButtons.forEach(({ url, buttonId }) => {
+		const buttonEl = document.getElementById(buttonId);
 
-    console.log({
-      result,
-    });
-  });
+		buttonEl.addEventListener("click", async () => {
+			const response = await fetch(url);
+			const result = await response.json();
 
-  astro4ButtonEl.addEventListener("click", async () => {
-    const response = await fetch(ASTRO_4_URL);
-    const result = await response.json();
-
-    console.log({
-      result,
-    });
-  });
+			console.log(result);
+		});
+	});
 </script>
